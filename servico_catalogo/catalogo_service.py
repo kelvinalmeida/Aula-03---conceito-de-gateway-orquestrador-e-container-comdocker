@@ -18,12 +18,16 @@ FILMES = {
 
 @app.route('/filme/<id_filme>')
 def detalhes_filme(id_filme):
-    filme = FILMES.get(id_filme)
+    
+    filme = FILMES.get(id_filme, None)
     
     if filme:
         return jsonify(filme)
     else:
         return jsonify({"erro": "Filme não encontrado"}), 404
+    
+    
+    
 
 if __name__ == "__main__":
     # Importante: Rodar na porta 5002
