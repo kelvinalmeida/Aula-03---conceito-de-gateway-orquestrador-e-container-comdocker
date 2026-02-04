@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 @app.route('/assistir/<id_filme>/<id_usuario>')
 def assistir_filme(id_filme, id_usuario):
+    return "Assistindo filme..."
     # 1. O Gateway pergunta ao Serviço de Assinaturas (Porta 5001) se o usuário pagou
     # O aluno acessa a 5000, mas internamente o Gateway chama a 5001
     resposta_conta = requests.get(f'http://localhost:5001/status/{id_usuario}').json()

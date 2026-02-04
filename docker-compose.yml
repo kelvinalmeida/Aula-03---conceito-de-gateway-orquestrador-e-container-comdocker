@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  # Serviço de Assinatura (Porta 5001)
+  assinatura:
+    build: ./servico_assinatura
+    ports:
+      - "5001:5001"
+    container_name: container_assinatura
+
+  # Serviço de Catálogo (Porta 5002)
+  catalogo:
+    build: ./servico_catalogo
+    ports:
+      - "5002:5002"
+    container_name: container_catalogo
+
+  # Gateway / Orquestrador (Porta 5000)
+  gateway:
+    build: ./mine_netflix
+    ports:
+      - "5000:5000"
+    depends_on:
+      - assinatura
+      - catalogo
+    container_name: container_gateway
+    # Mapeia o código para dentro do container para facilitar edições (opcional)
+    volumes:
+      - ./mine_netflix:/app

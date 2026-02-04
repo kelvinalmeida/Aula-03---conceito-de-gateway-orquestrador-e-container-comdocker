@@ -11,7 +11,7 @@ COPY . .
 RUN pip install flask requests
 
 # Definir a variável de ambiente para ativar o modo de desenvolvimento do Flask
-ENV FLASK_APP=assinatura.py
+ENV FLASK_APP=assinatura_service.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=5001
 ENV FLASK_ENV=development

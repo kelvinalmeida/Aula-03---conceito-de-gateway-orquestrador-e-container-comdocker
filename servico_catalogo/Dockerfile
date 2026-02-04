@@ -12,7 +12,7 @@ RUN pip install flask requests
 
 
 # Definir a variável de ambiente para ativar o modo de desenvolvimento do Flask
-ENV FLASK_APP=catalogo.py
+ENV FLASK_APP=catalogo_service.py
 ENV FLASK_RUN_HOST=0.0.0.0
 ENV FLASK_RUN_PORT=5002
 ENV FLASK_ENV=development
