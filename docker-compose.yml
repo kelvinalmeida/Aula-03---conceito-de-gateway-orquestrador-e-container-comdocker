@@ -1,29 +1,25 @@
-version: '3'
-
 services:
-  # Serviço de Assinatura (Porta 5001)
-  assinatura:
-    build: ./servico_assinatura
+  # 1. Serviço de Assinatura
+  cont_servico_assinatura:
+    build: ./servico_assinatura       # Onde está o Dockerfile? Na pasta servico_assinatura
     ports:
-      - "5001:5001"
+      - "5001:5001"                   # Porta PC : Porta Container
     container_name: container_assinatura
 
-  # Serviço de Catálogo (Porta 5002)
-  catalogo:
-    build: ./servico_catalogo
+  # 2. Serviço de Catálogo
+  cont_servico_catalogo:
+    build: ./servico_catalogo         # Onde está o Dockerfile? Na pasta servico_catalogo
     ports:
       - "5002:5002"
     container_name: container_catalogo
 
-  # Gateway / Orquestrador (Porta 5000)
+  # 3. Gateway (O Maestro)
   gateway:
-    build: ./mine_netflix
+    build: ./mine_netflix             # Onde está o Dockerfile? Na pasta mine_netflix
     ports:
       - "5000:5000"
-    depends_on:
-      - assinatura
-      - catalogo
     container_name: container_gateway
-    # Mapeia o código para dentro do container para facilitar edições (opcional)
-    volumes:
-      - ./mine_netflix:/app
+    # O Pulo do Gato: Dizemos que o Gateway "depende" dos outros para nascer
+    depends_on:
+      - cont_servico_assinatura
+      - cont_servico_catalogo
