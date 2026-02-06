@@ -1,0 +1,36 @@
+# 1. DEPLOYMENT: Quem roda o código
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-deployment
+spec:
+  replicas: 3 # MÁGICA: Vamos rodar 3 cópias iguais ao mesmo tempo!
+  selector:
+    matchLabels:
+      app: gateway-netflix
+  template:
+    metadata:
+      labels:
+        app: gateway-netflix
+    spec:
+      containers:
+      - name: gateway-container
+        # Aqui usamos a imagem que criamos com Docker
+        image: minha-netflix-gateway:latest 
+        ports:
+        - containerPort: 5000 # A porta que definimos no Python
+          
+---
+# 2. SERVICE: Quem recebe o tráfego de rede
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service # Esse é o "DNS" que os outros usam
+spec:
+  type: LoadBalancer # Cria um IP externo para acessarmos do navegador
+  selector:
+    app: gateway-netflix
+  ports:
+    - protocol: TCP
+      port: 80 # Porta padrão da web (para não precisarmos digitar :5000)
+      targetPort: 5000 # Redireciona para a porta 5000 do container
